@@ -2,36 +2,43 @@
   const cfg = window.SOCSOC_SUPABASE || {};
   const configured = cfg.url && cfg.anonKey && !cfg.url.includes('INCOLLA_QUI') && !cfg.anonKey.includes('INCOLLA_QUI');
   const grid = document.getElementById('productGrid');
-  const count = document.getElementById('productCount');
   const message = document.getElementById('catalogMessage');
-  const search = document.getElementById('productSearch');
-  const filterButtons = [...document.querySelectorAll('.catalog-filter')];
+const search = document.getElementById('productSearch');
+const categoryFilter = document.getElementById('categoryFilter');
+const cards = [...document.querySelectorAll('.catalog-card')];
+const count = document.getElementById('productCount');
 
-  let products = [];
-  let activeFilter = 'tutti';
+function updateCatalog() {
+  const query = (search.value || '').trim().toLowerCase();
+  const activeFilter = categoryFilter.value;
+  let visible = 0;
 
-  const escapeHtml = value => String(value ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
-  const wa = text => `https://wa.me/393515088368?text=${encodeURIComponent(text)}`;
+  cards.forEach(card => {
+    const category = card.dataset.category || '';
+    const name = (card.dataset.name || '').toLowerCase();
+    const text = card.textContent.toLowerCase();
 
-  function showMessage(text) {
-    message.textContent = text;
-    message.hidden = false;
-  }
+    const matchesFilter =
+      activeFilter === 'tutti' || category === activeFilter;
 
-  function render() {
-    const q = (search.value || '').trim().toLowerCase();
-    const visible = products.filter(p => {
-      const matchesFilter = activeFilter === 'tutti' || p.category === activeFilter;
-      const haystack = `${p.name || ''} ${p.description || ''} ${p.price || ''} ${p.category || ''}`.toLowerCase();
-      return matchesFilter && (!q || haystack.includes(q));
-    });
+    const matchesSearch =
+      !query || name.includes(query) || text.includes(query);
 
-    count.textContent = visible.length === 1 ? '1 oggetto visualizzato' : `${visible.length} oggetti visualizzati`;
+    const show = matchesFilter && matchesSearch;
 
-    if (!visible.length) {
-      grid.innerHTML = '<div class="catalog-message">Nessun oggetto trovato con questi filtri.</div>';
-      return;
-    }
+    card.hidden = !show;
+
+    if (show) visible++;
+  });
+
+  count.textContent =
+    visible === 1 ? '1 oggetto' : `${visible} oggetti`;
+}
+
+search.addEventListener('input', updateCatalog);
+categoryFilter.addEventListener('change', updateCatalog);
+
+updateCatalog();
 
     grid.innerHTML = visible.map(p => {
       const sold = p.status === 'sold';
