@@ -179,6 +179,42 @@ section {
 }
 
 /* ===================================
+   PAGINA PRODOTTI
+   =================================== */
+.page-header {
+  text-align: center;
+  background: var(--color-surface);
+}
+
+.page-header .subtitle {
+  color: var(--color-text-light);
+  max-width: 600px;
+  margin: 12px auto 0;
+}
+
+.catalog-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-small {
+  padding: 8px 14px;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+@media (min-width: 768px) {
+  .catalog-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===================================
    FOOTER
    =================================== */
 .site-footer {
