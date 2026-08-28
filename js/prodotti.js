@@ -38,6 +38,31 @@
     message.textContent = '';
   }
 
+
+  function formatPrice(price) {
+    if (price === null || price === undefined || String(price).trim() === '') {
+      return 'Prezzo su richiesta';
+    }
+
+    const cleaned = String(price)
+      .replace(/[€\s]/g, '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim();
+
+    const number = Number(cleaned);
+
+    if (Number.isNaN(number)) {
+      return String(price);
+    }
+
+    return new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(number);
+  }
+
   function render() {
     const q = (search?.value || '').trim().toLowerCase();
     const activeFilter = categoryFilter?.value || 'tutti';
@@ -110,7 +135,7 @@
             </p>
 
             <p class="catalog-price">
-              ${escapeHtml(p.price || 'Prezzo su richiesta')}
+              ${escapeHtml(formatPrice(p.price))}
             </p>
 
             <p class="catalog-note">

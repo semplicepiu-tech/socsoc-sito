@@ -497,6 +497,31 @@
     carousel.innerHTML = `<div class="latest-message">${safe(text)}</div>`;
   }
 
+
+  function formatPrice(price) {
+    if (price === null || price === undefined || String(price).trim() === '') {
+      return 'Prezzo su richiesta';
+    }
+
+    const cleaned = String(price)
+      .replace(/[€\s]/g, '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+      .trim();
+
+    const number = Number(cleaned);
+
+    if (Number.isNaN(number)) {
+      return String(price);
+    }
+
+    return new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }).format(number);
+  }
+
   function render(products) {
     if (!products.length) {
       showMessage('Nessun prodotto disponibile al momento.');
@@ -520,7 +545,7 @@
           <div class="latest-body">
             <span class="latest-category">${safe(product.category || 'altro')}</span>
             <p class="latest-name">${safe(product.name || 'Oggetto recuperato')}</p>
-            <p class="latest-price">${safe(product.price || 'Prezzo su richiesta')}</p>
+            <p class="latest-price">${safe(formatPrice(product.price))}</p>
 
             <a
               class="btn btn-primary btn-small"
