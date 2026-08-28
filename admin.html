@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Gestione prodotti — Soc & Soc</title>
+  <meta name="theme-color" content="#009246">
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-page">
+<div class="brand-stripe" aria-hidden="true"></div>
+
+<header class="admin-header">
+  <div class="container admin-header-inner">
+    <a href="index.html" class="admin-logo"><img src="img/brand-logo.png" alt="Soc & Soc"></a>
+    <div class="admin-header-actions">
+      <a class="admin-link" href="prodotti.html" target="_blank" rel="noopener">Vedi catalogo</a>
+      <button id="logoutBtn" class="btn btn-secondary btn-small" type="button" hidden>Esci</button>
+    </div>
+  </div>
+</header>
+
+<main class="admin-main">
+  <div class="container">
+    <section id="setupPanel" class="admin-panel admin-alert" hidden>
+      <h1>Collega Supabase</h1>
+      <p>La pagina è pronta, ma prima devi inserire URL e anon key in <code>js/supabase-config.js</code> e completare il setup indicato nel file <code>README-ADMIN.md</code>.</p>
+    </section>
+
+    <section id="loginPanel" class="admin-login-card">
+      <span class="eyebrow">Area riservata</span>
+      <h1>Gestione prodotti</h1>
+      <p>Accedi per aggiungere, modificare o rimuovere gli oggetti dal catalogo.</p>
+
+      <form id="loginForm" class="admin-form admin-login-form">
+        <label>Email<input id="loginEmail" type="email" autocomplete="username" required placeholder="email@esempio.it"></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
+        <button class="btn btn-primary" type="submit">Accedi</button>
+        <p id="loginMessage" class="form-message" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="admin-dashboard-head">
+        <div><span class="eyebrow">Catalogo Soc & Soc</span><h1>Gestisci gli oggetti</h1><p>Le modifiche vengono pubblicate nel catalogo subito dopo il salvataggio.</p></div>
+        <button id="newProductBtn" class="btn btn-primary" type="button">+ Nuovo prodotto</button>
+      </div>
+
+      <div class="admin-layout">
+        <section class="admin-panel admin-editor">
+          <div class="admin-panel-head">
+            <div><p class="admin-kicker">Scheda prodotto</p><h2 id="formTitle">Nuovo prodotto</h2></div>
+            <button id="cancelEditBtn" class="admin-text-btn" type="button" hidden>Annulla modifica</button>
+          </div>
+
+          <form id="productForm" class="admin-form">
+            <input id="productId" type="hidden">
+            <input id="existingImagePath" type="hidden">
+            <input id="existingImageUrl" type="hidden">
+
+            <label>Nome prodotto
+              <input id="productName" type="text" maxlength="120" required placeholder="Es. Credenza vintage in legno">
+            </label>
+
+            <div class="admin-two-cols">
+              <label>Categoria
+                <select id="productCategory" required>
+                  <option value="mobili">Mobili</option>
+                  <option value="vintage">Vintage</option>
+                  <option value="casa">Casa</option>
+                  <option value="elettrodomestici">Elettrodomestici</option>
+                  <option value="altro">Altro</option>
+                </select>
+              </label>
+              <label>Stato
+                <select id="productStatus" required>
+                  <option value="available">Disponibile</option>
+                  <option value="sold">Venduto</option>
+                </select>
+              </label>
+            </div>
+
+            <label>Prezzo
+              <input id="productPrice" type="text" maxlength="50" placeholder="Es. 80 € oppure Prezzo su richiesta">
+            </label>
+
+            <label>Descrizione
+              <textarea id="productDescription" rows="4" maxlength="500" placeholder="Misure, condizioni, dettagli utili..."></textarea>
+            </label>
+
+            <label>Foto prodotto
+              <input id="productImage" type="file" accept="image/jpeg,image/png,image/webp">
+              <span class="field-help">JPG, PNG o WEBP. Consigliato: foto orizzontale, massimo 5 MB.</span>
+            </label>
+
+            <div id="imagePreviewWrap" class="admin-image-preview" hidden>
+              <img id="imagePreview" alt="Anteprima prodotto">
+            </div>
+
+            <button id="saveProductBtn" class="btn btn-primary" type="submit">Pubblica prodotto</button>
+            <p id="productMessage" class="form-message" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="admin-panel admin-list-panel">
+          <div class="admin-panel-head">
+            <div><p class="admin-kicker">Prodotti pubblicati</p><h2>Catalogo</h2></div>
+            <span id="adminProductCount" class="admin-count">0</span>
+          </div>
+
+          <div class="admin-search-wrap"><input id="adminSearch" type="search" placeholder="Cerca nel catalogo..."></div>
+          <div id="adminProductList" class="admin-product-list"></div>
+          <div id="adminEmpty" class="admin-empty" hidden>Nessun prodotto presente.</div>
+        </section>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
