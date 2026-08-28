@@ -98,9 +98,39 @@ p { color: var(--muted); }
 .hero-proof { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 25px; font-size: .91rem; font-weight: 800; color: #374451; }
 .hero-proof span::before { content: "✓"; color: var(--green); font-weight: 950; margin-right: 6px; }
 .hero-media { position: relative; }
-.hero-image-frame { overflow: hidden; border-radius: 28px; box-shadow: 0 26px 65px rgba(22,32,42,.17); border: 7px solid #fff; background: #fff; transform: rotate(.5deg); }
-.hero-image-frame img { width: 100%; aspect-ratio: 939/347; object-fit: cover; }
-.hero-badge { position: absolute; left: -22px; bottom: -22px; padding: 18px 20px; border-radius: 18px; background: var(--orange); color: #fff; box-shadow: var(--shadow); max-width: 220px; }
+.hero-image-frame {
+  overflow: hidden;
+  border-radius: 22px;
+  box-shadow: 0 20px 45px rgba(22,32,42,.16);
+  border: 6px solid #fff;
+  background: #fff;
+  transform: none;
+}
+
+.hero-image-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+.hero-badge {
+  position: absolute;
+  left: -22px;
+  bottom: -22px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--orange);
+  color: #fff;
+  box-shadow: var(--shadow);
+  max-width: 240px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.hero-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+}
 .hero-badge strong { display: block; font-size: 1.14rem; line-height: 1.1; }
 .hero-badge span { display: block; margin-top: 6px; font-size: .82rem; opacity: .94; }
 
@@ -256,25 +286,241 @@ p { color: var(--muted); }
   .footer-grid > :first-child { grid-column: 1/-1; }
 }
 
+/* ===== MOBILE - TESTATA ===== */
 @media (max-width: 640px) {
-  .container { width: min(100% - 28px, var(--max-width)); }
-  .topbar-inner { justify-content: center; text-align: center; }
-  .topbar-items span:not(:first-child), .topbar-dot { display: none; }
-  .logo { min-width: 0; }
-  .logo-img { width: 205px; max-height: 45px; }
-  .hero { padding: 48px 0 52px; }
-  .hero h1 { font-size: clamp(2.35rem, 12.4vw, 3.6rem); }
-  .hero-badge { position: static; margin-top: 12px; max-width: none; }
-  .section { padding: 64px 0; }
-  .services-grid, .product-grid, .process-grid, .services-list-grid, .review-grid, .footer-grid { grid-template-columns: 1fr; }
-  .footer-grid > :first-child { grid-column: auto; }
-  .trust-grid { grid-template-columns: 1fr 1fr; }
-  .trust-stat { padding: 19px 8px; }
-  .trust-stat + .trust-stat::before { display: none; }
-  .cta-band-inner, .footer-bottom, .catalog-toolbar { align-items: stretch; flex-direction: column; }
-  .btn-row { display: grid; grid-template-columns: 1fr; }
-  .btn { width: 100%; }
-  .whatsapp-float { right: 12px; bottom: 12px; padding: 12px 14px; }
-  .whatsapp-float .label { display: none; }
-  .product-media { min-height: 190px; }
+
+  .topbar {
+    padding: 0;
+  }
+
+  .topbar-inner {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .topbar-items {
+    display: block;
+  }
+
+  /* Nascondiamo tutto tranne il primo messaggio */
+  .topbar-items span:not(:first-child) {
+    display: none;
+  }
+
+  .topbar-items span:first-child {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .topbar-inner > a {
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .site-header {
+    background: #fff;
+  }
+
+  .header-inner {
+    min-height: 74px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-img {
+    width: 190px;
+    max-width: 65vw;
+    height: auto;
+  }
+
+  .menu-toggle {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+  .hero {
+  padding-top: 30px;
+  padding-bottom: 35px;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+
+.hero .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.hero .subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.hero .btn-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.hero .btn {
+  width: 100%;
+}
+.hero-badge {
+  position: static !important;
+  display: block;
+  width: 100% !important;
+  max-width: none;
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-sizing: border-box;
+  background: var(--orange);
+  color: #fff;
+  text-align: left;
+}
+.hero-badge strong {
+  display: block;
+  font-size: 15px;
+  line-height: 1.25;
+  .review-stars {
+  color: #ffd54a;
+  margin-right: 4px;
+}
+}
+
+.hero-badge span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.trust-grid {
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  overflow: hidden;
+}
+
+.trust-stat {
+  min-width: 0;
+  padding: 16px 8px;
+  text-align: center;
+}
+
+.trust-stat strong {
+  font-size: 16px;
+  word-break: break-word;
+}
+
+.trust-stat span {
+  font-size: 12px;
+}
+
+.whatsapp-float {
+  right: 10px;
+  bottom: 10px;
+  padding: 9px 12px;
+  font-size: 13px;
+}
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.services-grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.service-card {
+  min-height: auto;
+  padding: 22px;
+}
+
+.service-icon {
+  width: 46px;
+  height: 46px;
+  margin-bottom: 18px;
+  border-radius: 13px;
+}
+
+.service-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.service-card p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.service-link {
+  margin-top: 16px;
+}
+.section-head h2 {
+  font-size: 1.8rem;
+  line-height: 1.08;
+}
+
+.section-head p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.section-soft {
+  padding-top: 10px;
+}
+.process-grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.process-step {
+  padding: 22px;
+}
+
+.process-step h3 {
+  font-size: 1.2rem;
+}
+
+.process-step p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.cta-band-inner {
+  display: block;
+}
+
+.cta-band .btn-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cta-band .btn {
+  width: 100%;
+}
+
+.cta-band {
+  padding: 30px 0;
+}
+
+.cta-band h2 {
+  font-size: 1.8rem;
+  line-height: 1.08;
+}
+
+.cta-band p {
+  font-size: 14px;
+  line-height: 1.6;
+}
 }
