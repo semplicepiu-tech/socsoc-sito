@@ -56,14 +56,18 @@
           <span class="sr-only">Cerca prodotti</span>
           <input id="productSearch" type="search" placeholder="Cerca: mobile, lampada, vintage..." autocomplete="off">
         </label>
-        <div class="catalog-filters" id="productFilters" aria-label="Filtra prodotti">
-          <button class="catalog-filter is-active" type="button" data-filter="tutti">Tutti</button>
-          <button class="catalog-filter" type="button" data-filter="mobili">Mobili</button>
-          <button class="catalog-filter" type="button" data-filter="vintage">Vintage</button>
-          <button class="catalog-filter" type="button" data-filter="casa">Casa</button>
-          <button class="catalog-filter" type="button" data-filter="elettrodomestici">Elettrodomestici</button>
-          <button class="catalog-filter" type="button" data-filter="altro">Altro</button>
-        </div>
+        <div class="catalog-filter-select">
+  <label for="categoryFilter">Categoria</label>
+
+  <select id="categoryFilter" aria-label="Filtra prodotti per categoria">
+    <option value="tutti">Tutti i prodotti</option>
+    <option value="mobili">Mobili</option>
+    <option value="vintage">Vintage</option>
+    <option value="casa">Casa</option>
+    <option value="elettrodomestici">Elettrodomestici</option>
+    <option value="altro">Altro</option>
+  </select>
+</div>
       </div>
 
       <div class="catalog-summary">
