@@ -235,7 +235,57 @@
         width: 100%;
       }
     }
-  </style>
+  
+    /* Carosello dentro la hero:
+       desktop = sotto testo + foto;
+       mobile/tablet = tra testo e foto. */
+    .hero-latest-products {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      padding: 34px 0 4px;
+      background: transparent;
+    }
+
+    .hero-grid > .hero-media {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    @media (max-width: 980px) {
+      .hero-latest-products,
+      .hero-grid > .hero-media {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .hero-latest-products {
+        padding: 16px 0 6px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-latest-products {
+        padding: 18px 0 4px;
+      }
+
+      .hero-latest-products .latest-products-head {
+        margin-bottom: 14px;
+      }
+
+      .hero-latest-products .section-head p {
+        display: none;
+      }
+
+      .hero-latest-products .latest-products-footer {
+        margin-top: 14px;
+      }
+
+      .hero-latest-products + .hero-media {
+        margin-top: 24px;
+      }
+    }
+
+</style>
 
 </head>
 <body>
@@ -278,6 +328,28 @@
       </div>
       <div class="hero-proof"><span>Sopralluogo gratuito</span><span>Tutto il Piemonte</span><span>Contatto diretto</span></div>
     </div>
+<section class="latest-products hero-latest-products" aria-labelledby="latestProductsTitle">
+    <div class="latest-products-head">
+      <div class="section-head">
+        <span class="eyebrow">Ultimi arrivi</span>
+        <h2 id="latestProductsTitle">Gli ultimi oggetti recuperati.</h2>
+        <p>Gli ultimi prodotti pubblicati da Soc & Soc. Su telefono scorri con il dito.</p>
+      </div>
+
+      <div class="latest-products-controls" aria-label="Scorri gli ultimi prodotti">
+        <button class="latest-arrow" id="latestPrev" type="button" aria-label="Prodotti precedenti">←</button>
+        <button class="latest-arrow" id="latestNext" type="button" aria-label="Prodotti successivi">→</button>
+      </div>
+    </div>
+
+    <div class="latest-carousel" id="latestProductsCarousel" aria-live="polite">
+      <div class="latest-message">Caricamento ultimi arrivi…</div>
+    </div>
+
+    <div class="latest-products-footer">
+      <a class="btn btn-secondary" href="prodotti.html">Vedi tutto il mercatino →</a>
+    </div>
+</section>
     <div class="hero-media">
       <div class="hero-image-frame"><img src="img/brand-cover.jpg" alt="Soc & Soc, sgomberi e recupero di mobili e oggetti vintage"></div>
       <a
@@ -317,30 +389,6 @@
 </section>
 
 
-<section class="latest-products" aria-labelledby="latestProductsTitle">
-  <div class="container">
-    <div class="latest-products-head">
-      <div class="section-head">
-        <span class="eyebrow">Ultimi arrivi</span>
-        <h2 id="latestProductsTitle">Gli ultimi oggetti recuperati.</h2>
-        <p>Gli ultimi prodotti pubblicati da Soc & Soc. Su telefono scorri con il dito.</p>
-      </div>
-
-      <div class="latest-products-controls" aria-label="Scorri gli ultimi prodotti">
-        <button class="latest-arrow" id="latestPrev" type="button" aria-label="Prodotti precedenti">←</button>
-        <button class="latest-arrow" id="latestNext" type="button" aria-label="Prodotti successivi">→</button>
-      </div>
-    </div>
-
-    <div class="latest-carousel" id="latestProductsCarousel" aria-live="polite">
-      <div class="latest-message">Caricamento ultimi arrivi…</div>
-    </div>
-
-    <div class="latest-products-footer">
-      <a class="btn btn-secondary" href="prodotti.html">Vedi tutto il mercatino →</a>
-    </div>
-  </div>
-</section>
 
 <section class="section section-soft">
   <div class="container split">
