@@ -435,6 +435,32 @@ section {
 }
 
 /* ===================================
+   PAGINE LEGALI
+   =================================== */
+.legal-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.legal-updated {
+  color: var(--color-text-light);
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.legal-content h2 {
+  font-size: 18px;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.legal-content p {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin-bottom: 8px;
+}
+
+/* ===================================
    FOOTER
    =================================== */
 .site-footer {
