@@ -215,6 +215,86 @@ section {
 }
 
 /* ===================================
+   PAGINA SGOMBERI
+   =================================== */
+.clearance-photo .hero-image {
+  height: 220px;
+}
+
+.trust-block {
+  background: var(--color-surface);
+}
+
+.trust-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-bg);
+  padding: 20px;
+  text-align: center;
+}
+
+.stars {
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.trust-score {
+  font-size: 14px;
+  color: var(--color-text-light);
+  margin-bottom: 20px;
+}
+
+.review-grid {
+  display: grid;
+  gap: 16px;
+  text-align: left;
+}
+
+.review {
+  border-left: 3px solid var(--color-border);
+  padding-left: 14px;
+}
+
+.review p {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 6px;
+}
+
+.review cite {
+  font-size: 13px;
+  color: var(--color-text-light);
+  font-style: normal;
+}
+
+.services-list ul {
+  list-style: none;
+  max-width: 500px;
+  margin: 20px auto 0;
+}
+
+.services-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq-link {
+  margin-top: 16px;
+}
+
+.faq-link a {
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .review-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ===================================
    FOOTER
    =================================== */
 .site-footer {
