@@ -1,0 +1,228 @@
+/* ===================================
+   VARIABILI — palette provvisoria neutra
+   Quando avremo il logo, cambieremo SOLO questi valori
+   =================================== */
+:root {
+  --color-text: #222222;
+  --color-text-light: #666666;
+  --color-bg: #ffffff;
+  --color-surface: #f4f4f2;
+  --color-border: #dcdcd8;
+  --color-accent: #333333;
+
+  --font-base: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius: 8px;
+  --max-width: 1100px;
+}
+
+/* ===================================
+   RESET DI BASE
+   Il reset toglie margini/padding di default del browser,
+   che sono diversi da browser a browser: partire "puliti"
+   evita sorprese.
+   =================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Segnaposto grigio finché non arrivano foto vere */
+.placeholder {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+  font-size: 14px;
+  min-height: 160px;
+}
+
+/* ===================================
+   HEADER
+   =================================== */
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 0;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.main-nav a {
+  font-size: 14px;
+}
+
+/* ===================================
+   BOTTONI
+   =================================== */
+.btn {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: var(--radius);
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* ===================================
+   SEZIONI
+   =================================== */
+section {
+  padding: 40px 0;
+}
+
+.hero .hero-image {
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.hero .subtitle {
+  color: var(--color-text-light);
+  margin-bottom: 20px;
+}
+
+.intro {
+  background: var(--color-surface);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.product-card .placeholder {
+  min-height: 100px;
+  margin-bottom: 8px;
+}
+
+.product-name {
+  font-size: 14px;
+}
+
+.product-price {
+  font-weight: bold;
+}
+
+.clearance-teaser {
+  background: var(--color-surface);
+  text-align: center;
+}
+
+.clearance-teaser h2 {
+  margin-bottom: 10px;
+}
+
+.clearance-teaser p {
+  margin-bottom: 20px;
+  color: var(--color-text-light);
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 24px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-light);
+}
+
+.site-footer p {
+  margin-bottom: 6px;
+}
+
+/* ===================================
+   RESPONSIVE — da qui in su, schermi più larghi
+   (tablet/desktop). Mobile-first: senza media query,
+   questo è già il layout per telefono.
+   =================================== */
+@media (min-width: 768px) {
+
+  .header-inner {
+    flex-wrap: nowrap;
+  }
+
+  .hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero .hero-image {
+    height: 320px;
+    margin-bottom: 0;
+    order: 2;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
