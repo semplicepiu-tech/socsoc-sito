@@ -8,6 +8,235 @@
   <meta name="theme-color" content="#009246">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ===== HOMEPAGE: ULTIMI ARRIVI ===== */
+    .latest-products {
+      padding: 72px 0;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .latest-products-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .latest-products-head .section-head {
+      margin-bottom: 0;
+    }
+
+    .latest-products-controls {
+      display: flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .latest-arrow {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 16px rgba(22,32,42,.06);
+    }
+
+    .latest-carousel {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, calc((100% - 40px) / 3));
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-inline: contain;
+      padding: 4px 2px 14px;
+      scrollbar-width: none;
+    }
+
+    .latest-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .latest-card {
+      scroll-snap-align: start;
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 7px 24px rgba(22,32,42,.055);
+    }
+
+    .latest-photo {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, #f5efe5, #fff 55%, #e9f5ee);
+    }
+
+    .latest-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .latest-placeholder {
+      padding: 22px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .85rem;
+      font-weight: 800;
+    }
+
+    .latest-status {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--green);
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 900;
+      box-shadow: 0 5px 14px rgba(0,0,0,.12);
+    }
+
+    .latest-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 17px;
+    }
+
+    .latest-category {
+      color: var(--green-dark);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-size: .68rem;
+      font-weight: 900;
+    }
+
+    .latest-name {
+      margin-top: 5px;
+      color: var(--ink);
+      font-size: 1.08rem;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .latest-price {
+      margin-top: 7px;
+      color: var(--ink);
+      font-size: 1.08rem;
+      font-weight: 950;
+    }
+
+    .latest-card .btn {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .latest-products-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .latest-message {
+      min-width: min(100%, 520px);
+      padding: 24px;
+      border: 1px dashed #cbd2cc;
+      border-radius: 18px;
+      background: #fafbf9;
+      color: var(--muted);
+      text-align: center;
+      scroll-snap-align: start;
+    }
+
+    @media (max-width: 980px) {
+      .latest-carousel {
+        grid-auto-columns: minmax(250px, calc((100% - 18px) / 2));
+        gap: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .latest-products {
+        padding: 48px 0;
+      }
+
+      .latest-products-head {
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .latest-products-head h2 {
+        font-size: 1.8rem;
+      }
+
+      .latest-products-controls {
+        display: none;
+      }
+
+      /* Mostra una scheda quasi intera e fa intravedere la successiva */
+      .latest-carousel {
+        width: calc(100% + 18px);
+        grid-auto-columns: 78%;
+        gap: 12px;
+        padding-right: 18px;
+      }
+
+      .latest-card {
+        border-radius: 16px;
+      }
+
+      .latest-photo {
+        aspect-ratio: 1 / 1;
+      }
+
+      .latest-body {
+        padding: 13px;
+      }
+
+      .latest-category {
+        font-size: 9px;
+      }
+
+      .latest-name {
+        font-size: 15px;
+      }
+
+      .latest-price {
+        font-size: 16px;
+      }
+
+      .latest-card .btn {
+        min-height: 39px;
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+
+      .latest-products-footer .btn {
+        width: 100%;
+      }
+    }
+  </style>
+
 </head>
 <body>
 <div class="brand-stripe" aria-hidden="true"></div>
@@ -87,6 +316,32 @@
   </div>
 </section>
 
+
+<section class="latest-products" aria-labelledby="latestProductsTitle">
+  <div class="container">
+    <div class="latest-products-head">
+      <div class="section-head">
+        <span class="eyebrow">Ultimi arrivi</span>
+        <h2 id="latestProductsTitle">Gli ultimi oggetti recuperati.</h2>
+        <p>Gli ultimi prodotti pubblicati da Soc & Soc. Su telefono scorri con il dito.</p>
+      </div>
+
+      <div class="latest-products-controls" aria-label="Scorri gli ultimi prodotti">
+        <button class="latest-arrow" id="latestPrev" type="button" aria-label="Prodotti precedenti">←</button>
+        <button class="latest-arrow" id="latestNext" type="button" aria-label="Prodotti successivi">→</button>
+      </div>
+    </div>
+
+    <div class="latest-carousel" id="latestProductsCarousel" aria-live="polite">
+      <div class="latest-message">Caricamento ultimi arrivi…</div>
+    </div>
+
+    <div class="latest-products-footer">
+      <a class="btn btn-secondary" href="prodotti.html">Vedi tutto il mercatino →</a>
+    </div>
+  </div>
+</section>
+
 <section class="section section-soft">
   <div class="container split">
     <div class="visual-card"><img src="img/brand-flyer.jpg" alt="Volantino Soc & Soc con servizi di sgombero e ritiro"></div>
@@ -159,6 +414,124 @@
   </div>
 </footer>
 <a class="whatsapp-float" href="https://wa.me/393515088368" target="_blank" rel="noopener" aria-label="Scrivi a Soc & Soc su WhatsApp"><span class="wa-dot">WA</span><span class="label">WhatsApp</span></a>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
 <script src="js/site.js"></script>
+
+<script>
+(() => {
+  const carousel = document.getElementById('latestProductsCarousel');
+  const prev = document.getElementById('latestPrev');
+  const next = document.getElementById('latestNext');
+  const cfg = window.SOCSOC_SUPABASE || {};
+
+  if (!carousel) return;
+
+  const configured =
+    cfg.url &&
+    cfg.anonKey &&
+    !cfg.url.includes('INCOLLA_QUI') &&
+    !cfg.anonKey.includes('INCOLLA_QUI');
+
+  const safe = value =>
+    String(value ?? '').replace(/[&<>'"]/g, c => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#039;',
+      '"': '&quot;'
+    }[c]));
+
+  const wa = text =>
+    `https://wa.me/393515088368?text=${encodeURIComponent(text)}`;
+
+  function showMessage(text) {
+    carousel.innerHTML = `<div class="latest-message">${safe(text)}</div>`;
+  }
+
+  function render(products) {
+    if (!products.length) {
+      showMessage('Nessun prodotto disponibile al momento.');
+      return;
+    }
+
+    carousel.innerHTML = products.map(product => {
+      const image = product.image_url
+        ? `<img src="${safe(product.image_url)}" alt="${safe(product.name)}" loading="lazy">`
+        : `<div class="latest-placeholder">Foto non disponibile</div>`;
+
+      const message = `Ciao Soc & Soc, vorrei informazioni su: ${product.name}.`;
+
+      return `
+        <article class="latest-card">
+          <div class="latest-photo">
+            <span class="latest-status">Disponibile</span>
+            ${image}
+          </div>
+
+          <div class="latest-body">
+            <span class="latest-category">${safe(product.category || 'altro')}</span>
+            <p class="latest-name">${safe(product.name || 'Oggetto recuperato')}</p>
+            <p class="latest-price">${safe(product.price || 'Prezzo su richiesta')}</p>
+
+            <a
+              class="btn btn-primary btn-small"
+              href="${wa(message)}"
+              target="_blank"
+              rel="noopener"
+            >Chiedi su WhatsApp</a>
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
+  async function loadLatestProducts() {
+    if (!configured) {
+      showMessage('Catalogo non ancora collegato.');
+      return;
+    }
+
+    if (!window.supabase) {
+      showMessage('Catalogo momentaneamente non disponibile.');
+      return;
+    }
+
+    try {
+      const client = window.supabase.createClient(cfg.url, cfg.anonKey);
+
+      const { data, error } = await client
+        .from('products')
+        .select('id,name,category,price,image_url,status,created_at')
+        .eq('status', 'available')
+        .order('created_at', { ascending: false })
+        .limit(8);
+
+      if (error) throw error;
+      render(data || []);
+    } catch (error) {
+      console.error('Errore carosello prodotti:', error);
+      showMessage('Non siamo riusciti a caricare gli ultimi prodotti.');
+    }
+  }
+
+  const scrollCarousel = direction => {
+    const firstCard = carousel.querySelector('.latest-card');
+    const distance = firstCard
+      ? firstCard.getBoundingClientRect().width + 20
+      : carousel.clientWidth * .8;
+
+    carousel.scrollBy({
+      left: direction * distance,
+      behavior: 'smooth'
+    });
+  };
+
+  prev?.addEventListener('click', () => scrollCarousel(-1));
+  next?.addEventListener('click', () => scrollCarousel(1));
+
+  loadLatestProducts();
+})();
+</script>
 </body>
 </html>
