@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contatti — Soc & Soc</title>
+  <meta name="description" content="Contatta Soc & Soc su WhatsApp, al telefono o tramite il modulo per uno sgombero o per informazioni sui prodotti.">
+  <style>
 /* ===================================
    VARIABILI — palette provvisoria neutra
    Quando avremo il logo, cambieremo SOLO questi valori
@@ -428,3 +436,71 @@ section {
   }
 
 }
+
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">SOC &amp; SOC</a>
+      <nav class="main-nav" aria-label="Menu principale">
+        <ul>
+          <li><a href="/prodotti.html">Prodotti</a></li>
+          <li><a href="/chi-siamo.html">Come nascono i prodotti</a></li>
+          <li><a href="/sgomberi.html">Sgomberi</a></li>
+          <li><a href="/domande-frequenti.html">FAQ</a></li>
+          <li><a href="/contatti.html">Contatti</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-header">
+      <div class="container">
+        <h1>Contattaci</h1>
+        <p class="subtitle">Scrivici su WhatsApp o chiamaci: ti rispondiamo il prima possibile. Se preferisci, compila il modulo qui sotto.</p>
+      </div>
+    </section>
+
+    <section class="contact-direct">
+      <div class="container">
+        <a href="https://wa.me/393515088368" class="btn btn-primary">Scrivici su WhatsApp</a>
+        <a href="tel:+393515088368" class="btn btn-secondary">Chiama · 351 508 8368</a>
+      </div>
+    </section>
+
+    <section class="contact-form-section">
+      <div class="container">
+        <h2>Oppure scrivici qui</h2>
+        <!--
+          NOTA TECNICA: questo form ha solo la struttura visiva.
+          Perché funzioni davvero (invio del messaggio) serve collegarlo
+          a un servizio di invio email — lo facciamo nella fase
+          "moduli e contatti" del progetto, non è ancora attivo.
+        -->
+        <form class="contact-form">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" required>
+
+          <label for="messaggio">Messaggio</label>
+          <textarea id="messaggio" name="messaggio" rows="5" required></textarea>
+
+          <button type="submit" class="btn btn-primary">Invia messaggio</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Soc &amp; Soc — Tel/WhatsApp: <a href="tel:+393515088368">351 508 8368</a></p>
+      <p><a href="/privacy.html">Privacy policy</a> · <a href="/cookie.html">Cookie policy</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
