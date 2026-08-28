@@ -3,12 +3,14 @@
    Quando avremo il logo, cambieremo SOLO questi valori
    =================================== */
 :root {
-  --color-text: #222222;
-  --color-text-light: #666666;
+  --color-text: #242220;
+  --color-text-light: #666660;
   --color-bg: #ffffff;
-  --color-surface: #f4f4f2;
-  --color-border: #dcdcd8;
-  --color-accent: #333333;
+  --color-surface: #FAF6EF;
+  --color-border: #ddd6c8;
+  --color-accent: #242220;
+  --color-brand-green: #1F6B3B;
+  --color-brand-red: #B4342D;
 
   --font-base: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 
@@ -62,6 +64,11 @@ img {
   color: var(--color-text-light);
   font-size: 14px;
   min-height: 160px;
+}
+
+.logo-img {
+  height: 32px;
+  width: auto;
 }
 
 /* ===================================
@@ -237,6 +244,7 @@ section {
   font-size: 20px;
   letter-spacing: 2px;
   margin-bottom: 4px;
+  color: var(--color-brand-green);
 }
 
 .trust-score {
@@ -403,7 +411,7 @@ section {
   height: 28px;
   line-height: 28px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: var(--color-brand-green);
   color: #ffffff;
   font-weight: bold;
   font-size: 14px;

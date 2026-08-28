@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Soc e Soc">
+  <rect width="64" height="64" rx="10" fill="#242220"/>
+  <rect x="6" y="46" width="52" height="4" fill="#1F6B3B"/>
+  <rect x="6" y="14" width="52" height="4" fill="#B4342D"/>
+  <text x="32" y="40" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="22" fill="#FAF6EF">S&amp;S</text>
+</svg>
