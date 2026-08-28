@@ -381,6 +381,52 @@ section {
 }
 
 /* ===================================
+   PAGINA "COME NASCONO I PRODOTTI"
+   =================================== */
+.process-grid {
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.process-step {
+  text-align: center;
+}
+
+.process-step .placeholder {
+  min-height: 140px;
+  margin-bottom: 10px;
+}
+
+.step-number {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.process-step h2 {
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.process-step p:last-child {
+  font-size: 14px;
+  color: var(--color-text-light);
+}
+
+@media (min-width: 768px) {
+  .process-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===================================
    FOOTER
    =================================== */
 .site-footer {
