@@ -24,7 +24,7 @@
       const name = form.querySelector('[name="nome"]')?.value.trim() || '';
       const message = form.querySelector('[name="messaggio"]')?.value.trim() || '';
       if (!name || !message) return;
-      const text = `Ciao Soc & Soc, sono ${name}. ${message}`;
+      const text = `Ciao Federico, sono ${name}. ${message}`;
       window.open(`https://wa.me/393515088368?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
     });
   }

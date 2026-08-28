@@ -1,0 +1,12 @@
+Inserisci qui le fotografie REALI prima/dopo degli sgomberi.
+
+Nomi previsti:
+prima-1.jpg
+dopo-1.jpg
+prima-2.jpg
+dopo-2.jpg
+prima-3.jpg
+dopo-3.jpg
+
+Quando le foto saranno disponibili, i segnaposto presenti in index.html
+e sgomberi.html andranno sostituiti con tag <img> che puntano a questi file.

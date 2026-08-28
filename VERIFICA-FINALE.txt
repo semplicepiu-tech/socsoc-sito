@@ -1,0 +1,28 @@
+SOC & SOC — VERIFICA FINALE
+Data: 28 agosto 2026
+
+Correzioni incluse:
+- Prima/Dopo aggiunto anche in homepage.
+- Carosello Prima/Dopo e recensioni mantenuti in sgomberi.html.
+- Frecce Prima/Dopo di sgomberi.html corrette.
+- Messaggio Contatti corretto: "Ciao Federico, sono [nome]. Posso avere informazioni?"
+- Topbar uniformata sulle pagine.
+- Dati attività aggiunti ai footer.
+- README aggiornati.
+- supabase-setup.sql aggiornato con policy più restrittive.
+- SUPABASE-SICUREZZA-DA-ESEGUIRE.sql aggiunto per il database già esistente.
+- Cartella img/sgomberi predisposta per le fotografie reali.
+- Nessuna Secret Key/service_role aggiunta nel frontend.
+
+Controlli automatici:
+- Sintassi file JavaScript: OK
+- Link/file locali HTML: OK
+- Placeholder privacy/cookie: OK
+- Secret key nel frontend: OK
+
+IMPORTANTE — UNICO PASSAGGIO MANUALE DI SICUREZZA:
+Eseguire SUPABASE-SICUREZZA-DA-ESEGUIRE.sql nel Supabase SQL Editor,
+MA SOLO dopo aver verificato che l'email usata per il login admin sia:
+semplicepiu@gmail.com
+
+Il file SQL non elimina prodotti e non elimina immagini.

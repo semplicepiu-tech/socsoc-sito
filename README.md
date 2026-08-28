@@ -1,23 +1,59 @@
 # SOC & SOC — sito web
 
-Sito statico HTML/CSS/JavaScript pronto per GitHub e per la pubblicazione con GitHub Pages o Vercel.
+Sito di Soc & Soc di Rubin Federico, dedicato a sgomberi, recupero e mercatino dell'usato/vintage in Piemonte.
 
-## Struttura
-- `index.html` — homepage
-- `prodotti.html` — vetrina prodotti
-- `sgomberi.html` — servizio sgomberi
-- `chi-siamo.html` — processo di recupero
-- `domande-frequenti.html` — FAQ
-- `contatti.html` — contatti e modulo che apre WhatsApp
+## Stack
+- HTML / CSS / JavaScript vanilla
+- GitHub Pages
+- Supabase: database, Authentication e Storage
+
+## Pagine principali
+- `index.html` — homepage, ultimi prodotti Supabase e sezione Prima/Dopo
+- `prodotti.html` — catalogo dinamico
+- `sgomberi.html` — servizi, recensioni e carosello Prima/Dopo
+- `admin.html` — area riservata prodotti
+- `contatti.html` — modulo che prepara un messaggio WhatsApp
 - `privacy.html`, `cookie.html` — informative
-- `css/style.css` — tutta la grafica
-- `js/site.js` — menu mobile, modulo WhatsApp, anno footer
-- `img/` — logo e materiale grafico
 
-## Pubblicazione su GitHub
-Apri la cartella in Visual Studio Code, collega il repository GitHub, poi fai Commit e Push. Se il repository usa GitHub Pages, imposta Pages sul branch `main` e cartella `/ (root)`.
+## Catalogo
+I prodotti NON sono scritti manualmente nell'HTML.
+Federico li gestisce da `admin.html`; il sito li legge da Supabase.
 
-## Da completare prima della pubblicazione definitiva
-- Inserire i dati mancanti in `privacy.html` e `cookie.html`.
-- Sostituire le schede segnaposto in `prodotti.html` con foto, nomi e prezzi reali.
-- Se disponibile, sostituire `img/brand-logo.png` con il file originale del logo ad alta risoluzione.
+## Foto Prima/Dopo
+Cartella predisposta:
+`img/sgomberi/`
+
+Nomi previsti:
+- `prima-1.jpg` / `dopo-1.jpg`
+- `prima-2.jpg` / `dopo-2.jpg`
+- `prima-3.jpg` / `dopo-3.jpg`
+
+Finché le fotografie reali non vengono inserite, il sito mostra segnaposto.
+
+## Sicurezza Supabase — operazione da fare
+Nel pacchetto è presente:
+
+`SUPABASE-SICUREZZA-DA-ESEGUIRE.sql`
+
+Apri Supabase → SQL Editor e incolla/esegui quel file **una volta**.
+
+La migrazione:
+- NON cancella prodotti;
+- NON cancella fotografie;
+- restringe inserimento/modifica/eliminazione all'account
+  `semplicepiu@gmail.com`.
+
+Prima di eseguirla verifica che questa sia l'email usata da Federico per il login in `admin.html`.
+
+Consigliato inoltre in Supabase: disabilitare le registrazioni pubbliche se non servono.
+
+## Pubblicazione
+Dopo aver sostituito i file nel progetto:
+
+```bash
+git add .
+git commit -m "Aggiornamento sito e sicurezza"
+git push origin main
+```
+
+GitHub Pages pubblicherà automaticamente le modifiche.

@@ -285,6 +285,199 @@
       }
     }
 
+
+    /* ===== HOMEPAGE: PRIMA / DOPO SGOMBERI ===== */
+    .home-before-after {
+      overflow: hidden;
+    }
+
+    .home-before-after-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+
+    .home-before-after-head .section-head {
+      margin-bottom: 0;
+    }
+
+    .home-ba-controls {
+      display: flex;
+      gap: 8px;
+      flex: 0 0 auto;
+    }
+
+    .home-ba-arrow {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.2rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 16px rgba(22,32,42,.06);
+    }
+
+    .home-ba-carousel {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(360px, calc((100% - 20px) / 2));
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-inline: contain;
+      padding: 4px 2px 12px;
+      scrollbar-width: none;
+    }
+
+    .home-ba-carousel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .home-ba-card {
+      scroll-snap-align: start;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(22,32,42,.06);
+    }
+
+    .home-ba-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .home-ba-photo {
+      position: relative;
+      min-height: 250px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(0,146,70,.08), rgba(232,117,0,.08)),
+        #f6f7f5;
+    }
+
+    .home-ba-photo + .home-ba-photo {
+      border-left: 1px solid var(--line);
+    }
+
+    .home-ba-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .home-ba-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 2;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #10222f;
+      color: #fff;
+      font-size: .68rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .home-ba-label.after {
+      background: var(--green);
+    }
+
+    .home-ba-placeholder {
+      padding: 24px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .83rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .home-ba-body {
+      padding: 17px;
+    }
+
+    .home-ba-body h3 {
+      margin-bottom: 6px;
+    }
+
+    .home-ba-body p {
+      color: var(--muted);
+    }
+
+    .home-ba-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
+    @media (max-width: 720px) {
+      .home-before-after {
+        padding-top: 48px;
+        padding-bottom: 48px;
+      }
+
+      .home-before-after-head {
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .home-before-after-head h2 {
+        font-size: 1.8rem;
+      }
+
+      .home-ba-controls {
+        display: none;
+      }
+
+      .home-ba-carousel {
+        width: calc(100% + 18px);
+        grid-auto-columns: 88%;
+        gap: 12px;
+        padding-right: 18px;
+      }
+
+      .home-ba-photo {
+        min-height: 190px;
+      }
+
+      .home-ba-photo img {
+        min-height: 190px;
+      }
+
+      .home-ba-body {
+        padding: 14px;
+      }
+
+      .home-ba-footer .btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .home-ba-images {
+        grid-template-columns: 1fr;
+      }
+
+      .home-ba-photo + .home-ba-photo {
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+
 </style>
 
 </head>
@@ -390,6 +583,81 @@
 
 
 
+
+<section class="section section-soft home-before-after" aria-labelledby="homeBeforeAfterTitle">
+  <div class="container">
+    <div class="home-before-after-head">
+      <div class="section-head">
+        <span class="eyebrow">Prima e dopo</span>
+        <h2 id="homeBeforeAfterTitle">Il risultato si vede.</h2>
+        <p>Alcuni interventi Soc & Soc prima e dopo lo sgombero. Scorri le immagini e guarda come cambia lo spazio.</p>
+      </div>
+
+      <div class="home-ba-controls" aria-label="Scorri lavori prima e dopo">
+        <button class="home-ba-arrow" id="homeBaPrev" type="button" aria-label="Lavoro precedente">←</button>
+        <button class="home-ba-arrow" id="homeBaNext" type="button" aria-label="Lavoro successivo">→</button>
+      </div>
+    </div>
+
+    <div class="home-ba-carousel" id="homeBaCarousel">
+      <article class="home-ba-card">
+        <div class="home-ba-images">
+          <div class="home-ba-photo">
+            <span class="home-ba-label">Prima</span>
+            <div class="home-ba-placeholder">Foto reale da inserire<br><strong>img/sgomberi/prima-1.jpg</strong></div>
+          </div>
+          <div class="home-ba-photo">
+            <span class="home-ba-label after">Dopo</span>
+            <div class="home-ba-placeholder">Foto reale da inserire<br><strong>img/sgomberi/dopo-1.jpg</strong></div>
+          </div>
+        </div>
+        <div class="home-ba-body">
+          <h3>Intervento 01</h3>
+          <p>Spazio pronto per mostrare un lavoro reale eseguito da Soc & Soc.</p>
+        </div>
+      </article>
+
+      <article class="home-ba-card">
+        <div class="home-ba-images">
+          <div class="home-ba-photo">
+            <span class="home-ba-label">Prima</span>
+            <div class="home-ba-placeholder">Foto reale da inserire<br><strong>img/sgomberi/prima-2.jpg</strong></div>
+          </div>
+          <div class="home-ba-photo">
+            <span class="home-ba-label after">Dopo</span>
+            <div class="home-ba-placeholder">Foto reale da inserire<br><strong>img/sgomberi/dopo-2.jpg</strong></div>
+          </div>
+        </div>
+        <div class="home-ba-body">
+          <h3>Intervento 02</h3>
+          <p>Secondo spazio per un appartamento, una cantina, un box o un altro sgombero documentato.</p>
+        </div>
+      </article>
+
+      <article class="home-ba-card">
+        <div class="home-ba-images">
+          <div class="home-ba-photo">
+            <span class="home-ba-label">Prima</span>
+            <div class="home-ba-placeholder">Foto reale da inserire<br><strong>img/sgomberi/prima-3.jpg</strong></div>
+          </div>
+          <div class="home-ba-photo">
+            <span class="home-ba-label after">Dopo</span>
+            <div class="home-ba-placeholder">Foto reale da inserire<br><strong>img/sgomberi/dopo-3.jpg</strong></div>
+          </div>
+        </div>
+        <div class="home-ba-body">
+          <h3>Intervento 03</h3>
+          <p>Terzo lavoro pronto per ampliare il portfolio con immagini reali prima e dopo.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="home-ba-footer">
+      <a class="btn btn-secondary" href="sgomberi.html">Scopri il servizio sgomberi →</a>
+    </div>
+  </div>
+</section>
+
 <section class="section section-soft">
   <div class="container split">
     <div class="visual-card"><img src="img/brand-flyer.jpg" alt="Volantino Soc & Soc con servizi di sgombero e ritiro"></div>
@@ -427,6 +695,7 @@
       <div>
         <img src="img/brand-logo.png" alt="Soc & Soc" class="footer-logo">
         <p class="footer-copy">Sgomberi, recupero e mercatino dell’usato e vintage. Recuperiamo ciò che può avere una seconda vita e lavoriamo in tutto il Piemonte.</p>
+        <p class="footer-business">Soc &amp; Soc di Rubin Federico · P.IVA 13403430013 · Via Chivasso 75/C, San Benigno Canavese (TO)</p>
       </div>
       <div><p class="footer-title">Naviga</p><ul class="footer-links"><li><a href="prodotti.html">Prodotti</a></li><li><a href="sgomberi.html">Sgomberi</a></li><li><a href="chi-siamo.html">Come nasce</a></li><li><a href="domande-frequenti.html">FAQ</a></li></ul></div>
       <div>
@@ -606,5 +875,31 @@
   loadLatestProducts();
 })();
 </script>
+
+<script>
+(() => {
+  const track = document.getElementById('homeBaCarousel');
+  const prev = document.getElementById('homeBaPrev');
+  const next = document.getElementById('homeBaNext');
+
+  if (!track) return;
+
+  const move = direction => {
+    const firstCard = track.querySelector('.home-ba-card');
+    const distance = firstCard
+      ? firstCard.getBoundingClientRect().width + 20
+      : track.clientWidth * .85;
+
+    track.scrollBy({
+      left: direction * distance,
+      behavior: 'smooth'
+    });
+  };
+
+  prev?.addEventListener('click', () => move(-1));
+  next?.addEventListener('click', () => move(1));
+})();
+</script>
+
 </body>
 </html>
