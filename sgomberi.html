@@ -270,59 +270,72 @@
     @media (hover: hover) { .before-after-card:hover .before-after-photo img { transform: scale(1.02); } }
 
 
-    /* ===== PRIMA / DOPO: IMMAGINI UNIFORMI ===== */
+    /* ===== PRIMA / DOPO: VERSIONE FINALE RESPONSIVE ===== */
+    .before-after-carousel {
+      align-items: start;
+    }
+
+    .before-after-card {
+      height: auto;
+      align-self: start;
+    }
+
     .before-after-grid {
-      height: 320px;
-      align-items: stretch;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
     }
 
     .before-after-photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
       min-height: 0;
-      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #202622;
     }
 
     .before-after-photo img {
       width: 100%;
       height: 100%;
       min-height: 0;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
-    }
-
-    .before-after-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+      display: block;
+      background: #202622;
     }
 
     .before-after-body {
-      flex: 1;
+      min-height: 0;
+      flex: none;
     }
 
     @media (max-width: 720px) {
       .before-after-grid {
-        height: 285px;
+        grid-template-columns: 1fr 1fr;
       }
 
-      .before-after-photo,
+      .before-after-photo {
+        aspect-ratio: 1 / 1;
+        height: auto;
+      }
+
       .before-after-photo img {
-        min-height: 0;
         height: 100%;
       }
     }
 
     @media (max-width: 390px) {
       .before-after-grid {
-        height: auto;
         grid-template-columns: 1fr 1fr;
       }
 
-      .before-after-photo {
-        height: 245px;
-      }
-
       .before-after-photo + .before-after-photo {
-        border-left: 1px solid var(--line);
+        border-left: 0;
         border-top: 0;
       }
     }
@@ -411,11 +424,11 @@
         <div class="before-after-grid">
           <div class="before-after-photo">
             <span class="before-after-label">Prima</span>
-            <img src="img/sgomberi/prima-1.jpg" alt="Cantina con scaffali e oggetti prima dello sgombero Soc & Soc" loading="lazy" decoding="async">
+            <img src="img/sgomberi/prima-1.jpg?v=5" alt="Cantina con scaffali e oggetti prima dello sgombero Soc & Soc" loading="lazy" decoding="async">
           </div>
           <div class="before-after-photo">
             <span class="before-after-label after">Dopo</span>
-            <img src="img/sgomberi/dopo-1.jpg" alt="Cantina con scaffali liberata dopo lo sgombero Soc & Soc" loading="lazy" decoding="async">
+            <img src="img/sgomberi/dopo-1.jpg?v=5" alt="Cantina con scaffali liberata dopo lo sgombero Soc & Soc" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="before-after-body">
@@ -428,16 +441,16 @@
         <div class="before-after-grid">
           <div class="before-after-photo">
             <span class="before-after-label">Prima</span>
-            <img src="img/sgomberi/prima-2.jpg" alt="Garage con arredi, sacchi e materiali prima dello sgombero Soc & Soc" loading="lazy" decoding="async">
+            <img src="img/sgomberi/prima-2.jpg?v=5" alt="Alloggio con mobili, elettrodomestici e oggetti prima dello sgombero Soc & Soc" loading="lazy" decoding="async">
           </div>
           <div class="before-after-photo">
             <span class="before-after-label after">Dopo</span>
-            <img src="img/sgomberi/dopo-2.jpg" alt="Garage liberato dopo lo sgombero Soc & Soc" loading="lazy" decoding="async">
+            <img src="img/sgomberi/dopo-2.jpg?v=5" alt="Alloggio libero e sgomberato dopo l’intervento Soc & Soc" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="before-after-body">
-          <h3>Garage sgomberato</h3>
-          <p>Arredi, sacchi e materiali ingombranti sono stati rimossi per restituire un ambiente ampio, libero e utilizzabile.</p>
+          <h3>Alloggio sgomberato</h3>
+          <p>Mobili, elettrodomestici, sacchi e oggetti accumulati sono stati rimossi, restituendo all’alloggio uno spazio libero, ordinato e nuovamente utilizzabile.</p>
         </div>
       </article>
 
@@ -445,11 +458,11 @@
         <div class="before-after-grid">
           <div class="before-after-photo">
             <span class="before-after-label">Prima</span>
-            <img src="img/sgomberi/prima-3.jpg" alt="Ripostiglio pieno di cartoni e oggetti prima dello sgombero Soc & Soc" loading="lazy" decoding="async">
+            <img src="img/sgomberi/prima-3.jpg?v=5" alt="Ripostiglio pieno di cartoni e oggetti prima dello sgombero Soc & Soc" loading="lazy" decoding="async">
           </div>
           <div class="before-after-photo">
             <span class="before-after-label after">Dopo</span>
-            <img src="img/sgomberi/dopo-3.jpg" alt="Ripostiglio completamente libero dopo lo sgombero Soc & Soc" loading="lazy" decoding="async">
+            <img src="img/sgomberi/dopo-3.jpg?v=5" alt="Ripostiglio completamente libero dopo lo sgombero Soc & Soc" loading="lazy" decoding="async">
           </div>
         </div>
         <div class="before-after-body">
