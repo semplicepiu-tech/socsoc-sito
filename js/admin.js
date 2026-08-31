@@ -86,14 +86,24 @@
   });
   cancelEditBtn.addEventListener('click', resetForm);
 
-  async function uploadImage(file) {
+  async function uploadImage(file, attempt = 1) {
+    const MAX_ATTEMPTS = 3;
     const { data: authData } = await client.auth.getUser();
     const userId = authData.user?.id;
     if (!userId) throw new Error('Sessione scaduta. Accedi di nuovo.');
     const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
     const path = `${userId}/${crypto.randomUUID()}.${ext}`;
     const { error } = await client.storage.from('product-images').upload(path, file, { cacheControl: '3600', upsert: false });
-    if (error) throw error;
+    if (error) {
+      // Errore di rete transitorio: riprovo automaticamente prima di arrendermi.
+      if (attempt < MAX_ATTEMPTS) {
+        console.warn(`Upload fallito (tentativo ${attempt}), riprovo tra un istante...`, error);
+        setMsg(productMessage, `Caricamento foto non riuscito, riprovo automaticamente (${attempt}/${MAX_ATTEMPTS - 1})…`);
+        await new Promise(resolve => setTimeout(resolve, 1200 * attempt));
+        return uploadImage(file, attempt + 1);
+      }
+      throw new Error('Impossibile caricare la foto dopo vari tentativi. Controlla la connessione e riprova.');
+    }
     const { data } = client.storage.from('product-images').getPublicUrl(path);
     return { path, url: data.publicUrl };
   }
