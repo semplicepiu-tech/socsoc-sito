@@ -162,7 +162,8 @@
       const images = getImages(p);
 
       const image = images.length
-        ? `<img src="${escapeHtml(images[0])}"
+        ? `<div class="photo-blur-bg" style="background-image:url('${escapeHtml(images[0])}')"></div>
+           <img class="photo-main" src="${escapeHtml(images[0])}"
                 alt="${escapeHtml(p.name)}"
                 loading="lazy"
                 data-open-lightbox="${cardIndex}">
