@@ -7,7 +7,7 @@
   <meta name="description" content="Sgomberi in Piemonte con sopralluogo gratuito. Recupero di mobili, oggetti vintage, rottami ed elettrodomestici. Contatta Soc & Soc su WhatsApp.">
   <meta name="theme-color" content="#009246">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 
   <style>
     /* ===== HOMEPAGE: ULTIMI ARRIVI ===== */
@@ -67,89 +67,115 @@
       display: none;
     }
 
-    .latest-card {
+    .catalog-card {
       scroll-snap-align: start;
       min-width: 0;
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      background: #fff;
       border: 1px solid var(--line);
       border-radius: 20px;
-      background: #fff;
       box-shadow: 0 7px 24px rgba(22,32,42,.055);
+      transition: transform .2s ease, box-shadow .2s ease;
     }
 
-    .latest-photo {
+    .catalog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 38px rgba(22,32,42,.11);
+    }
+
+    .catalog-photo {
       position: relative;
       aspect-ratio: 4 / 3;
       overflow: hidden;
-      display: grid;
-      place-items: center;
       background: linear-gradient(145deg, #f5efe5, #fff 55%, #e9f5ee);
     }
 
-    .latest-photo img {
+    .catalog-photo img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       cursor: zoom-in;
     }
 
-    .latest-placeholder {
+    .catalog-photo-placeholder {
+      height: 100%;
+      display: grid;
+      place-items: center;
       padding: 22px;
-      color: var(--muted);
       text-align: center;
-      font-size: .85rem;
+      color: var(--muted);
       font-weight: 800;
     }
 
-    .latest-status {
+    .product-status {
       position: absolute;
-      top: 10px;
-      left: 10px;
+      left: 12px;
+      top: 12px;
       z-index: 2;
-      padding: 5px 9px;
+      padding: 6px 10px;
       border-radius: 999px;
-      background: var(--green);
       color: #fff;
-      font-size: .68rem;
+      background: var(--green);
+      font-size: .72rem;
       font-weight: 900;
-      box-shadow: 0 5px 14px rgba(0,0,0,.12);
+      box-shadow: 0 5px 14px rgba(0,0,0,.13);
     }
 
-    .latest-body {
+    .product-status.sold {
+      background: #6c757d;
+    }
+
+    .catalog-body {
       display: flex;
       flex-direction: column;
       flex: 1;
-      padding: 17px;
+      padding: 18px;
     }
 
-    .latest-category {
+    .catalog-category {
       color: var(--green-dark);
       text-transform: uppercase;
-      letter-spacing: .1em;
-      font-size: .68rem;
+      letter-spacing: .12em;
+      font-size: .69rem;
       font-weight: 900;
     }
 
-    .latest-name {
+    .catalog-name {
       margin-top: 5px;
       color: var(--ink);
-      font-size: 1.08rem;
+      font-size: 1.13rem;
       font-weight: 900;
       line-height: 1.2;
     }
 
-    .latest-price {
-      margin-top: 7px;
+    .catalog-price {
+      margin: 8px 0 6px;
       color: var(--ink);
-      font-size: 1.08rem;
+      font-size: 1.15rem;
       font-weight: 950;
     }
 
-    .latest-card .btn {
+    .catalog-note {
+      margin-bottom: 16px;
+      font-size: .86rem;
+      line-height: 1.55;
+    }
+
+    .catalog-body .btn {
       width: 100%;
-      margin-top: 15px;
+      margin-top: auto;
+    }
+
+    .catalog-card.is-sold .catalog-photo img {
+      filter: grayscale(.25);
+      opacity: .78;
+    }
+
+    .catalog-card.is-sold .btn {
+      pointer-events: none;
+      opacity: .55;
     }
 
     .latest-products-footer {
@@ -202,30 +228,20 @@
         padding-right: 18px;
       }
 
-      .latest-card {
-        border-radius: 16px;
+      .catalog-card {
+        border-radius: 17px;
       }
 
-      .latest-body {
-        padding: 13px;
+      .catalog-photo {
+        aspect-ratio: 16 / 11;
       }
 
-      .latest-category {
-        font-size: 9px;
+      .catalog-body {
+        padding: 16px;
       }
 
-      .latest-name {
-        font-size: 15px;
-      }
-
-      .latest-price {
-        font-size: 16px;
-      }
-
-      .latest-card .btn {
-        min-height: 39px;
-        padding: 8px 10px;
-        font-size: 12px;
+      .catalog-name {
+        font-size: 1.08rem;
       }
 
       .latest-products-footer .btn {
@@ -888,32 +904,34 @@
     renderedProducts = products;
 
     carousel.innerHTML = products.map((product, cardIndex) => {
+      const sold = product.status === 'sold';
       const images = getImages(product);
       const image = images.length
         ? `<img class="photo-main" src="${safe(images[0])}" alt="${safe(product.name)}" loading="lazy" data-open-lightbox="${cardIndex}">
            ${images.length > 1 ? `<span class="photo-count">1/${images.length}</span>` : ''}`
-        : `<div class="latest-placeholder">Foto non disponibile</div>`;
+        : `<div class="catalog-photo-placeholder">Foto non disponibile</div>`;
 
+      const status = sold ? 'Venduto' : 'Disponibile';
       const message = `Ciao Soc & Soc, vorrei informazioni su: ${product.name}.`;
 
       return `
-        <article class="latest-card">
-          <div class="latest-photo">
-            <span class="latest-status">Disponibile</span>
+        <article class="catalog-card ${sold ? 'is-sold' : ''}">
+          <div class="catalog-photo">
+            <span class="product-status ${sold ? 'sold' : ''}">${status}</span>
             ${image}
           </div>
 
-          <div class="latest-body">
-            <span class="latest-category">${safe(product.category || 'altro')}</span>
-            <p class="latest-name">${safe(product.name || 'Oggetto recuperato')}</p>
-            <p class="latest-price">${safe(formatPrice(product.price))}</p>
+          <div class="catalog-body">
+            <span class="catalog-category">${safe(product.category || 'altro')}</span>
+            <p class="catalog-name">${safe(product.name || 'Oggetto recuperato')}</p>
+            <p class="catalog-price">${safe(formatPrice(product.price))}</p>
+            <p class="catalog-note">${safe(product.description || 'Contattaci per informazioni, condizioni e ritiro.')}</p>
 
-            <a
-              class="btn btn-primary btn-small"
-              href="${wa(message)}"
-              target="_blank"
-              rel="noopener"
-            >Chiedi su WhatsApp</a>
+            ${
+              sold
+                ? `<span class="btn btn-secondary btn-small" aria-disabled="true">Prodotto venduto</span>`
+                : `<a class="btn btn-primary btn-small" href="${wa(message)}" target="_blank" rel="noopener">Chiedi su WhatsApp</a>`
+            }
           </div>
         </article>
       `;
@@ -936,7 +954,7 @@
 
       const { data, error } = await client
         .from('products')
-        .select('id,name,category,price,image_url,image_urls,status,created_at')
+        .select('id,name,category,price,description,image_url,image_urls,status,created_at')
         .eq('status', 'available')
         .order('created_at', { ascending: false })
         .limit(8);
@@ -950,7 +968,7 @@
   }
 
   const scrollCarousel = direction => {
-    const firstCard = carousel.querySelector('.latest-card');
+    const firstCard = carousel.querySelector('.catalog-card');
     const distance = firstCard
       ? firstCard.getBoundingClientRect().width + 20
       : carousel.clientWidth * .8;
