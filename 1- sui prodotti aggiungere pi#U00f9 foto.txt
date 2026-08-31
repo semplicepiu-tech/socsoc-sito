@@ -1,0 +1,24 @@
+1- sui prodotti aggiungere più foto e se qualcuno clicca sulla foto permettere di allargare la foto e vederla meglio
+2- su pagina prodotti cambiare foto con quella che mi manda
+3- cambiare foto prima o dopo la terza perché non è quella 
+4- dire che facciamo spedizioni in tutta italia ma nelle foto prodotti mettere +spedizione
+5- poi quando condivido il link del sito non si vede un'immagine chiara e per ogni pagina condivisa deve esserci una foto corretta
+6- sulla pagina Come Nasce mettiamo un punto 4 possiamo vendere case e facciamo valutazioni con le migliori agenzie di vendita
+7- dominio www.soc&soc.it
+8- sulla pagina Admin quando carichi una foto a volte non la carica 
+9- sulla pagina Admin aggiungere una categoria ,usato, sport, vestiario, e altre 
+10- su prodotti aggiungere le categorie del menù a tendina
+11- contenuti 2 o 3 a settimana. 
+12- pagina index dove c'è scritto su card 01 dopo preventivo, ritiriamo anche gratis se la merce è tutta recuperabile e vendibile
+13 pagina index su card 02 titolo Ritiro e recupero GRATIS, togliere batterie, e per elettrodomestici (NO FRIGO),  e su ritiriamo rottami ferrosi e cavi in rame
+14- vediamo dove inserire che c'è anche il servizio di valutazione oggetti grazie ad un antiquario
+15- su Index la parte "preferiamo recuperarlo " mettiamo solo lo recuperiamo
+16- poi sulla seconda spunta "preventivo chiaro e GRATIS"
+17- hanno anche a disposizione una motoscala aspetto la foto e devo togliere il numero da GPT
+18- rifare foto per index lasciando sempre il tricolore come parte identificativa
+19- poi la foto della motoscala che mi ha mandato togliere il numero
+20- poi quando uno clicca un prodotto e vuole info deve avere il messaggio preimpostato per chiedere info su quel prodotto   
+21- togliere l'indirizzo Via Chivasso 75
+22- ha la possibilità anche di vendere mobili di terzi dobbiamo capire dove inserirlo e come gestirlo
+23- su i FAQ dobbiamo inserire anche fate trasporti? e risposta
+24- dire anche che si possono fare preventivi anche manando foto su whatsapp

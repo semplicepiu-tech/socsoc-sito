@@ -147,7 +147,7 @@ p { color: var(--muted); }
 .section { padding: 84px 0; }
 .section-soft { background: var(--surface-alt); }
 .section-cream { background: var(--cream); }
-.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 .service-card { min-height: 275px; display: flex; flex-direction: column; padding: 28px; border-radius: var(--radius); background: #fff; border: 1px solid var(--line); box-shadow: 0 6px 24px rgba(22,32,42,.045); transition: .22s ease; }
 .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-sm); }
 .service-icon { width: 50px; height: 50px; display: grid; place-items: center; border-radius: 15px; margin-bottom: 28px; font-weight: 950; font-size: 1.22rem; color: #fff; background: var(--green); }
