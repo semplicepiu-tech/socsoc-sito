@@ -532,3 +532,15 @@ body {
   font-size: .82rem;
   line-height: 1.5;
 }
+
+/* Lightbox foto prodotto — condivisa da tutte le pagine che mostrano prodotti */
+.photo-count{position:absolute;right:10px;bottom:10px;z-index:2;padding:4px 9px;border-radius:999px;background:rgba(20,20,20,.65);color:#fff;font-size:.68rem;font-weight:800}
+.lightbox{display:none;position:fixed;inset:0;z-index:200;place-items:center;background:rgba(10,12,10,.92);padding:24px}
+.lightbox:not([hidden]){display:grid}
+.lightbox img{max-width:min(92vw,900px);max-height:82vh;object-fit:contain;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lightbox-close{position:absolute;top:18px;right:22px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:2rem;line-height:1;cursor:pointer;display:none}
+.lightbox-nav:not([hidden]){display:grid;place-items:center}
+.lightbox-prev{left:16px}.lightbox-next{right:16px}
+.lightbox-counter{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font-size:.82rem;font-weight:800;background:rgba(255,255,255,.14);padding:5px 12px;border-radius:999px}
+@media(max-width:640px){.lightbox-nav{width:40px;height:40px;font-size:1.6rem}.lightbox-close{top:10px;right:10px}}

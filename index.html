@@ -91,7 +91,8 @@
     .latest-photo img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      cursor: zoom-in;
     }
 
     .latest-placeholder {
@@ -619,6 +620,14 @@
       <a class="btn btn-secondary" href="prodotti.html">Vedi tutto il mercatino →</a>
     </div>
 </section>
+
+<div id="lightbox" class="lightbox" hidden aria-hidden="true">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Chiudi">×</button>
+  <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Foto precedente">‹</button>
+  <img id="lightboxImage" src="" alt="">
+  <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Foto successiva">›</button>
+  <span class="lightbox-counter" id="lightboxCounter"></span>
+</div>
     <div class="hero-media">
       <div class="hero-image-frame"><img src="img/brand-cover.jpg" alt="Soc & Soc, sgomberi e recupero di mobili e oggetti vintage"></div>
       <a
@@ -867,15 +876,26 @@
     }).format(number);
   }
 
+  let renderedProducts = [];
+
+  function getImages(p) {
+    if (Array.isArray(p.image_urls) && p.image_urls.length) return p.image_urls;
+    return p.image_url ? [p.image_url] : [];
+  }
+
   function render(products) {
     if (!products.length) {
       showMessage('Nessun prodotto disponibile al momento.');
       return;
     }
 
-    carousel.innerHTML = products.map(product => {
-      const image = product.image_url
-        ? `<img src="${safe(product.image_url)}" alt="${safe(product.name)}" loading="lazy">`
+    renderedProducts = products;
+
+    carousel.innerHTML = products.map((product, cardIndex) => {
+      const images = getImages(product);
+      const image = images.length
+        ? `<img src="${safe(images[0])}" alt="${safe(product.name)}" loading="lazy" data-open-lightbox="${cardIndex}">
+           ${images.length > 1 ? `<span class="photo-count">1/${images.length}</span>` : ''}`
         : `<div class="latest-placeholder">Foto non disponibile</div>`;
 
       const message = `Ciao Soc & Soc, vorrei informazioni su: ${product.name}.`;
@@ -920,7 +940,7 @@
 
       const { data, error } = await client
         .from('products')
-        .select('id,name,category,price,image_url,status,created_at')
+        .select('id,name,category,price,image_url,image_urls,status,created_at')
         .eq('status', 'available')
         .order('created_at', { ascending: false })
         .limit(8);
@@ -947,6 +967,62 @@
 
   prev?.addEventListener('click', () => scrollCarousel(-1));
   next?.addEventListener('click', () => scrollCarousel(1));
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const lightboxClose = document.getElementById('lightboxClose');
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+
+  function renderLightbox() {
+    lightboxImage.src = lightboxImages[lightboxIndex];
+    const multi = lightboxImages.length > 1;
+    lightboxPrev.hidden = !multi;
+    lightboxNext.hidden = !multi;
+    lightboxCounter.hidden = !multi;
+    lightboxCounter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+  }
+
+  function openLightbox(images, startIndex) {
+    lightboxImages = images;
+    lightboxIndex = startIndex;
+    renderLightbox();
+    lightbox.hidden = false;
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+
+  lightboxPrev?.addEventListener('click', () => {
+    lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    renderLightbox();
+  });
+  lightboxNext?.addEventListener('click', () => {
+    lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+    renderLightbox();
+  });
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (!lightbox || lightbox.hidden) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrev?.click();
+    if (e.key === 'ArrowRight') lightboxNext?.click();
+  });
+
+  carousel.addEventListener('click', e => {
+    const img = e.target.closest('[data-open-lightbox]');
+    if (!img) return;
+    const product = renderedProducts[Number(img.dataset.openLightbox)];
+    if (!product) return;
+    openLightbox(getImages(product), 0);
+  });
 
   loadLatestProducts();
 })();
