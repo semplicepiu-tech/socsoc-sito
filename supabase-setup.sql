@@ -12,7 +12,7 @@ create table if not exists public.products (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   category text not null default 'altro'
-    check (category in ('mobili','vintage','casa','elettrodomestici','altro')),
+    check (category in ('mobili','vintage','casa','elettrodomestici','usato','sport','vestiario','altro')),
   price text not null default 'Prezzo su richiesta',
   description text not null default '',
   status text not null default 'available'
