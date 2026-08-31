@@ -58,8 +58,6 @@
 
           <form id="productForm" class="admin-form">
             <input id="productId" type="hidden">
-            <input id="existingImagePath" type="hidden">
-            <input id="existingImageUrl" type="hidden">
 
             <label>Nome prodotto
               <input id="productName" type="text" maxlength="120" required placeholder="Es. Credenza vintage in legno">
@@ -94,14 +92,12 @@
               <textarea id="productDescription" rows="4" maxlength="500" placeholder="Misure, condizioni, dettagli utili..."></textarea>
             </label>
 
-            <label>Foto prodotto
-              <input id="productImage" type="file" accept="image/jpeg,image/png,image/webp">
-              <span class="field-help">JPG, PNG o WEBP. Consigliato: foto orizzontale, massimo 5 MB.</span>
+            <label>Foto prodotto (fino a 3)
+              <input id="productImages" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+              <span class="field-help">JPG, PNG o WEBP. Max 5 MB a foto, fino a 3 foto per prodotto. Clicca la × su una foto per toglierla.</span>
             </label>
 
-            <div id="imagePreviewWrap" class="admin-image-preview" hidden>
-              <img id="imagePreview" alt="Anteprima prodotto">
-            </div>
+            <div id="imageGallery" class="admin-image-gallery" hidden></div>
 
             <button id="saveProductBtn" class="btn btn-primary" type="submit">Pubblica prodotto</button>
             <p id="productMessage" class="form-message" aria-live="polite"></p>

@@ -16,9 +16,11 @@
   const formTitle = document.getElementById('formTitle');
   const cancelEditBtn = document.getElementById('cancelEditBtn');
   const newProductBtn = document.getElementById('newProductBtn');
-  const imageInput = document.getElementById('productImage');
-  const imagePreviewWrap = document.getElementById('imagePreviewWrap');
-  const imagePreview = document.getElementById('imagePreview');
+  const imagesInput = document.getElementById('productImages');
+  const imageGallery = document.getElementById('imageGallery');
+  const MAX_IMAGES = 3;
+  let existingImages = []; // [{url, path}] già salvate su questo prodotto
+  let newFiles = [];       // File[] scelti ora, non ancora caricati
 
   if (!configured || !window.supabase) {
     setupPanel.hidden = false;
@@ -57,26 +59,63 @@
   logoutBtn.addEventListener('click', async () => { await client.auth.signOut(); });
   client.auth.onAuthStateChange((_event, session) => updateAuthUI(session));
 
-  imageInput.addEventListener('change', () => {
-    const file = imageInput.files?.[0];
-    if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      imageInput.value = '';
-      return setMsg(productMessage, 'La foto supera 5 MB. Riducila e riprova.', 'error');
+  function renderGallery() {
+    const total = existingImages.length + newFiles.length;
+    imageGallery.hidden = total === 0;
+
+    const existingThumbs = existingImages.map((img, i) => `
+      <div class="admin-image-thumb" data-kind="existing" data-index="${i}">
+        <img src="${safe(img.url)}" alt="Foto prodotto">
+        <button type="button" class="thumb-remove" data-kind="existing" data-index="${i}" aria-label="Rimuovi foto">×</button>
+      </div>`).join('');
+
+    const newThumbs = newFiles.map((file, i) => `
+      <div class="admin-image-thumb" data-kind="new" data-index="${i}">
+        <img src="${URL.createObjectURL(file)}" alt="Nuova foto">
+        <span class="thumb-new">Nuova</span>
+        <button type="button" class="thumb-remove" data-kind="new" data-index="${i}" aria-label="Rimuovi foto">×</button>
+      </div>`).join('');
+
+    imageGallery.innerHTML = existingThumbs + newThumbs;
+  }
+
+  imageGallery.addEventListener('click', e => {
+    const btn = e.target.closest('.thumb-remove');
+    if (!btn) return;
+    const index = Number(btn.dataset.index);
+    if (btn.dataset.kind === 'existing') existingImages.splice(index, 1);
+    else newFiles.splice(index, 1);
+    renderGallery();
+  });
+
+  imagesInput.addEventListener('change', () => {
+    const chosen = Array.from(imagesInput.files || []);
+    imagesInput.value = ''; // permette di riselezionare lo stesso file in seguito
+
+    const remaining = MAX_IMAGES - existingImages.length - newFiles.length;
+    if (remaining <= 0) {
+      return setMsg(productMessage, `Hai già raggiunto il massimo di ${MAX_IMAGES} foto. Rimuovine una per aggiungerne un'altra.`, 'error');
     }
-    imagePreview.src = URL.createObjectURL(file);
-    imagePreviewWrap.hidden = false;
+
+    const tooBig = chosen.filter(f => f.size > 5 * 1024 * 1024);
+    const valid = chosen.filter(f => f.size <= 5 * 1024 * 1024).slice(0, remaining);
+
+    if (tooBig.length) setMsg(productMessage, `${tooBig.length===1?'Una foto supera':'Alcune foto superano'} i 5 MB e ${tooBig.length===1?'non è stata':'non sono state'} aggiunta.`, 'error');
+    else if (chosen.length > valid.length) setMsg(productMessage, `Puoi avere al massimo ${MAX_IMAGES} foto: solo le prime ${valid.length} sono state aggiunte.`, 'error');
+    else setMsg(productMessage, '');
+
+    newFiles.push(...valid);
+    renderGallery();
   });
 
   function resetForm() {
     productForm.reset();
     $('productId').value = '';
-    $('existingImagePath').value = '';
-    $('existingImageUrl').value = '';
+    existingImages = [];
+    newFiles = [];
     formTitle.textContent = 'Nuovo prodotto';
     cancelEditBtn.hidden = true;
-    imagePreviewWrap.hidden = true;
-    imagePreview.removeAttribute('src');
+    renderGallery();
     setMsg(productMessage, '');
   }
 
@@ -116,17 +155,20 @@
 
     try {
       const id = $('productId').value;
-      let imagePath = $('existingImagePath').value || null;
-      let imageUrl = $('existingImageUrl').value || null;
-      const file = imageInput.files?.[0];
 
-      if (file) {
-        const uploaded = await uploadImage(file);
-        const oldPath = imagePath;
-        imagePath = uploaded.path;
-        imageUrl = uploaded.url;
-        if (oldPath) await client.storage.from('product-images').remove([oldPath]);
+      // Chi era già salvato in origine, per capire dopo cosa è stato tolto.
+      const originalPaths = id ? (products.find(p => p.id === id)?.image_paths || []) : [];
+      const keptPaths = existingImages.map(img => img.path);
+      const removedPaths = originalPaths.filter(p => !keptPaths.includes(p));
+
+      // Carico le nuove foto una alla volta (riusa uploadImage con retry già collaudato).
+      const uploaded = [];
+      for (const file of newFiles) {
+        uploaded.push(await uploadImage(file));
       }
+
+      const finalUrls = [...existingImages.map(i => i.url), ...uploaded.map(u => u.url)];
+      const finalPaths = [...existingImages.map(i => i.path), ...uploaded.map(u => u.path)];
 
       const payload = {
         name: $('productName').value.trim(),
@@ -134,14 +176,21 @@
         price: $('productPrice').value.trim() || 'Prezzo su richiesta',
         description: $('productDescription').value.trim(),
         status: $('productStatus').value,
-        image_url: imageUrl,
-        image_path: imagePath,
+        image_urls: finalUrls,
+        image_paths: finalPaths,
+        // Compatibilità: la pagina Prodotti pubblica userà ancora questi due
+        // campi finché non completiamo l'aggiornamento della galleria pubblica.
+        image_url: finalUrls[0] || null,
+        image_path: finalPaths[0] || null,
         updated_at: new Date().toISOString()
       };
 
       const query = id ? client.from('products').update(payload).eq('id', id) : client.from('products').insert(payload);
       const { error } = await query;
       if (error) throw error;
+
+      // Solo dopo il salvataggio riuscito, elimino dallo storage le foto rimosse.
+      if (removedPaths.length) await client.storage.from('product-images').remove(removedPaths);
 
       setMsg(productMessage, id ? 'Prodotto aggiornato.' : 'Prodotto pubblicato.', 'success');
       await loadProducts();
@@ -202,11 +251,13 @@
       $('productStatus').value = product.status || 'available';
       $('productPrice').value = product.price || '';
       $('productDescription').value = product.description || '';
-      $('existingImagePath').value = product.image_path || '';
-      $('existingImageUrl').value = product.image_url || '';
+      const urls = product.image_urls?.length ? product.image_urls : (product.image_url ? [product.image_url] : []);
+      const paths = product.image_paths?.length ? product.image_paths : (product.image_path ? [product.image_path] : []);
+      existingImages = urls.map((url, i) => ({ url, path: paths[i] || '' }));
+      newFiles = [];
+      renderGallery();
       formTitle.textContent = 'Modifica prodotto';
       cancelEditBtn.hidden = false;
-      if (product.image_url) { imagePreview.src = product.image_url; imagePreviewWrap.hidden = false; } else { imagePreviewWrap.hidden = true; }
       document.querySelector('.admin-editor').scrollIntoView({ behavior: 'smooth', block: 'start' });
       return;
     }
@@ -222,7 +273,8 @@
       if (!confirm(`Eliminare definitivamente “${product.name}”?`)) return;
       const { error } = await client.from('products').delete().eq('id', product.id);
       if (error) return alert('Errore: ' + error.message);
-      if (product.image_path) await client.storage.from('product-images').remove([product.image_path]);
+      const pathsToRemove = product.image_paths?.length ? product.image_paths : (product.image_path ? [product.image_path] : []);
+      if (pathsToRemove.length) await client.storage.from('product-images').remove(pathsToRemove);
       resetForm();
       return loadProducts();
     }
