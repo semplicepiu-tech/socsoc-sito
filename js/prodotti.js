@@ -12,7 +12,62 @@
   const search = document.getElementById('productSearch');
   const categoryFilter = document.getElementById('categoryFilter');
 
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+
+  function getImages(p) {
+    if (Array.isArray(p.image_urls) && p.image_urls.length) return p.image_urls;
+    return p.image_url ? [p.image_url] : [];
+  }
+
+  function openLightbox(images, startIndex) {
+    lightboxImages = images;
+    lightboxIndex = startIndex;
+    renderLightbox();
+    lightbox.hidden = false;
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+
+  function renderLightbox() {
+    lightboxImage.src = lightboxImages[lightboxIndex];
+    const multi = lightboxImages.length > 1;
+    lightboxPrev.hidden = !multi;
+    lightboxNext.hidden = !multi;
+    lightboxCounter.hidden = !multi;
+    lightboxCounter.textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+  }
+
+  lightboxPrev.addEventListener('click', () => {
+    lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+    renderLightbox();
+  });
+  lightboxNext.addEventListener('click', () => {
+    lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
+    renderLightbox();
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lightboxPrev.click();
+    if (e.key === 'ArrowRight') lightboxNext.click();
+  });
+
   let products = [];
+  let renderedVisible = [];
 
   const escapeHtml = value =>
     String(value ?? '').replace(/[&<>'"]/g, c => ({
@@ -92,6 +147,7 @@
     }
 
     if (!grid) return;
+    renderedVisible = visible;
 
     if (!visible.length) {
       grid.innerHTML = `
@@ -101,13 +157,16 @@
       return;
     }
 
-    grid.innerHTML = visible.map(p => {
+    grid.innerHTML = visible.map((p, cardIndex) => {
       const sold = p.status === 'sold';
+      const images = getImages(p);
 
-      const image = p.image_url
-        ? `<img src="${escapeHtml(p.image_url)}"
+      const image = images.length
+        ? `<img src="${escapeHtml(images[0])}"
                 alt="${escapeHtml(p.name)}"
-                loading="lazy">`
+                loading="lazy"
+                data-open-lightbox="${cardIndex}">
+           ${images.length > 1 ? `<span class="photo-count">1/${images.length}</span>` : ''}`
         : `<div class="catalog-photo-placeholder">
              Foto non disponibile
            </div>`;
@@ -165,6 +224,14 @@
 
   search?.addEventListener('input', render);
   categoryFilter?.addEventListener('change', render);
+
+  grid?.addEventListener('click', e => {
+    const img = e.target.closest('[data-open-lightbox]');
+    if (!img) return;
+    const product = renderedVisible[Number(img.dataset.openLightbox)];
+    if (!product) return;
+    openLightbox(getImages(product), 0);
+  });
 
   async function loadProducts() {
     if (!configured) {

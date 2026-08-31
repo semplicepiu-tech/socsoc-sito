@@ -219,6 +219,14 @@
       <div id="catalogMessage" class="catalog-message" hidden></div>
       <div id="productGrid" class="catalog-grid" aria-live="polite"></div>
 
+      <div id="lightbox" class="lightbox" hidden aria-hidden="true">
+        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Chiudi">×</button>
+        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Foto precedente">‹</button>
+        <img id="lightboxImage" src="" alt="">
+        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Foto successiva">›</button>
+        <span class="lightbox-counter" id="lightboxCounter"></span>
+      </div>
+
       <div class="catalog-info">
         <strong>Il catalogo cambia spesso.</strong>
         <p>Un oggetto può essere venduto rapidamente. Contattaci sempre per confermare disponibilità, condizioni e modalità di ritiro.</p>
