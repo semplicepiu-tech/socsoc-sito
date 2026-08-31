@@ -166,6 +166,7 @@
                 alt="${escapeHtml(p.name)}"
                 loading="lazy"
                 data-open-lightbox="${cardIndex}">
+           <span class="zoom-hint">🔍 Clicca per ingrandire</span>
            ${images.length > 1 ? `<span class="photo-count">1/${images.length}</span>` : ''}`
         : `<div class="catalog-photo-placeholder">
              Foto non disponibile

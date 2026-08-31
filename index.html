@@ -7,7 +7,7 @@
   <meta name="description" content="Sgomberi in Piemonte con sopralluogo gratuito. Recupero di mobili, oggetti vintage, rottami ed elettrodomestici. Contatta Soc & Soc su WhatsApp.">
   <meta name="theme-color" content="#009246">
   <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/style.css?v=4">
 
   <style>
     /* ===== HOMEPAGE: ULTIMI ARRIVI ===== */
@@ -908,6 +908,7 @@
       const images = getImages(product);
       const image = images.length
         ? `<img class="photo-main" src="${safe(images[0])}" alt="${safe(product.name)}" loading="lazy" data-open-lightbox="${cardIndex}">
+           <span class="zoom-hint">🔍 Clicca per ingrandire</span>
            ${images.length > 1 ? `<span class="photo-count">1/${images.length}</span>` : ''}`
         : `<div class="catalog-photo-placeholder">Foto non disponibile</div>`;
 

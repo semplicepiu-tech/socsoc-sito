@@ -535,6 +535,9 @@ body {
 
 /* Lightbox foto prodotto — condivisa da tutte le pagine che mostrano prodotti */
 .photo-count{position:absolute;right:10px;bottom:10px;z-index:2;padding:4px 9px;border-radius:999px;background:rgba(20,20,20,.65);color:#fff;font-size:.68rem;font-weight:800}
+.zoom-hint{position:absolute;left:10px;bottom:10px;z-index:2;padding:4px 9px;border-radius:999px;background:rgba(20,20,20,.55);color:#fff;font-size:.66rem;font-weight:700;pointer-events:none;opacity:0;transition:opacity .15s ease}
+.catalog-card:hover .zoom-hint,.catalog-photo:active .zoom-hint{opacity:1}
+@media(hover:none){.zoom-hint{opacity:1;background:rgba(20,20,20,.45)}}
 .lightbox{display:none;position:fixed;inset:0;z-index:200;place-items:center;background:rgba(10,12,10,.92);padding:24px}
 .lightbox:not([hidden]){display:grid}
 .lightbox img{max-width:min(92vw,900px);max-height:82vh;object-fit:contain;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
