@@ -213,6 +213,7 @@
                    </span>`
                 : `<a class="btn btn-primary btn-small"
                       href="${wa(msg)}"
+                      data-umami-event="click-whatsapp-prodotto"
                       target="_blank"
                       rel="noopener">
                      Chiedi su WhatsApp

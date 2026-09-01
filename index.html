@@ -581,6 +581,7 @@
 
 </style>
 
+<script defer src="https://cloud.umami.is/script.js" data-website-id="19d3121b-2de0-4b73-98bf-58fdbb47e2bb"></script>
 </head>
 <body>
 <div class="brand-stripe" aria-hidden="true"></div>
@@ -589,7 +590,7 @@
     <div class="topbar-items">
       <span><strong>Sopralluogo gratuito</strong></span>
     </div>
-    <a href="tel:+393515088368">351 508 8368</a>
+    <a href="tel:+393515088368" data-umami-event="click-telefono">351 508 8368</a>
   </div>
 </div>
 <header class="site-header">
@@ -617,7 +618,7 @@
   Valutiamo ciò che può essere recuperato e riutilizzato.
 </p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="https://wa.me/393515088368?text=Ciao%20Soc%20%26%20Soc%2C%20vorrei%20richiedere%20un%20sopralluogo%20gratuito." target="_blank" rel="noopener">Richiedi sopralluogo gratuito</a>
+        <a class="btn btn-primary" href="https://wa.me/393515088368?text=Ciao%20Soc%20%26%20Soc%2C%20vorrei%20richiedere%20un%20sopralluogo%20gratuito." data-umami-event="click-whatsapp" target="_blank" rel="noopener">Richiedi sopralluogo gratuito</a>
         <a class="btn btn-secondary" href="prodotti.html">Scopri gli oggetti recuperati</a>
       </div>
       <div class="hero-proof"><span>Sopralluogo gratuito</span><span>Tutto il Piemonte</span><span>Contatto diretto</span></div>
@@ -794,8 +795,8 @@
   <div class="container cta-band-inner">
     <div><h2>Hai qualcosa da sgomberare?</h2><p>Scrivici due righe su WhatsApp e organizziamo un sopralluogo gratuito.</p></div>
     <div class="btn-row">
-      <a class="btn btn-primary" href="https://wa.me/393515088368?text=Ciao%20Soc%20%26%20Soc%2C%20vorrei%20richiedere%20un%20sopralluogo%20gratuito." target="_blank" rel="noopener">Scrivici su WhatsApp</a>
-      <a class="btn btn-secondary" href="tel:+393515088368">Chiama 351 508 8368</a>
+      <a class="btn btn-primary" href="https://wa.me/393515088368?text=Ciao%20Soc%20%26%20Soc%2C%20vorrei%20richiedere%20un%20sopralluogo%20gratuito." data-umami-event="click-whatsapp" target="_blank" rel="noopener">Scrivici su WhatsApp</a>
+      <a class="btn btn-secondary" href="tel:+393515088368" data-umami-event="click-telefono">Chiama 351 508 8368</a>
     </div>
   </div>
 </section>
@@ -813,13 +814,13 @@
 
   <ul class="footer-links">
     <li>
-      <a href="https://wa.me/393515088368" target="_blank" rel="noopener">
+      <a href="https://wa.me/393515088368" data-umami-event="click-whatsapp" target="_blank" rel="noopener">
         WhatsApp
       </a>
     </li>
 
     <li>
-      <a href="tel:+393515088368">
+      <a href="tel:+393515088368" data-umami-event="click-telefono">
         351 508 8368
       </a>
     </li>
@@ -840,7 +841,7 @@
     <div class="footer-bottom"><p>© <span data-year>2026</span> Soc &amp; Soc</p><p><a href="privacy.html">Privacy</a> · <a href="cookie.html">Cookie</a></p></div>
   </div>
 </footer>
-<a class="whatsapp-float" href="https://wa.me/393515088368" target="_blank" rel="noopener" aria-label="Scrivi a Soc & Soc su WhatsApp"><span class="wa-dot">WA</span><span class="label">WhatsApp</span></a>
+<a class="whatsapp-float" href="https://wa.me/393515088368" data-umami-event="click-whatsapp" target="_blank" rel="noopener" aria-label="Scrivi a Soc & Soc su WhatsApp"><span class="wa-dot">WA</span><span class="label">WhatsApp</span></a>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-config.js?v=2"></script>
 <script src="js/site.js?v=2"></script>
@@ -944,7 +945,7 @@
             ${
               sold
                 ? `<span class="btn btn-secondary btn-small" aria-disabled="true">Prodotto venduto</span>`
-                : `<a class="btn btn-primary btn-small" href="${wa(message)}" target="_blank" rel="noopener">Chiedi su WhatsApp</a>`
+                : `<a class="btn btn-primary btn-small" href="${wa(message)}" data-umami-event="click-whatsapp-prodotto" target="_blank" rel="noopener">Chiedi su WhatsApp</a>`
             }
           </div>
         </article>
