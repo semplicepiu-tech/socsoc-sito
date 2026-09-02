@@ -15,8 +15,18 @@ create table if not exists analytics_events (
   created_at timestamptz not null default now(),
   path text not null,
   event_type text not null check (event_type in ('pageview', 'click_whatsapp', 'click_telefono')),
-  referrer text
+  referrer text,
+  visitor_id text,
+  session_id text
 );
+
+-- Se la tabella esisteva già dalla versione precedente, aggiunge le due colonne mancanti
+-- senza toccare i dati già raccolti.
+alter table analytics_events add column if not exists visitor_id text;
+alter table analytics_events add column if not exists session_id text;
+
+create index if not exists analytics_events_session_id_idx on analytics_events (session_id);
+create index if not exists analytics_events_visitor_id_idx on analytics_events (visitor_id);
 
 create index if not exists analytics_events_created_at_idx on analytics_events (created_at desc);
 create index if not exists analytics_events_event_type_idx on analytics_events (event_type);
