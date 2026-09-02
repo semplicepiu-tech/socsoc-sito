@@ -1,0 +1,155 @@
+<style>
+  * { box-sizing: border-box; }
+  .app {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #16181A;
+    color: #EDEBE4;
+    min-height: 520px;
+    border: 1px solid #2A2D30;
+    border-radius: 10px;
+    padding: 22px 24px;
+  }
+  h2 { font-size: 17px; font-weight: 500; margin: 0 0 2px; }
+  .sub { font-size: 12.5px; color: #8A8D8F; margin: 0 0 20px; }
+  .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .range-row { display: flex; gap: 6px; }
+  .range-btn {
+    background: #1C1F21;
+    border: 1px solid #2A2D30;
+    color: #C9C7BE;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .range-btn.active { background: #2C3A38; border-color: #5A9A8E; color: #7CC9BB; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .stat-card { background: #1C1F21; border: 1px solid #2A2D30; border-radius: 8px; padding: 12px 14px; }
+  .stat-card .label { font-size: 11px; color: #8A8D8F; margin-bottom: 6px; }
+  .stat-card .val { font-size: 22px; font-variant-numeric: tabular-nums; }
+  .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .panel { background: #1C1F21; border: 1px solid #2A2D30; border-radius: 8px; padding: 14px 16px; }
+  .panel h3 { font-size: 12.5px; color: #8A8D8F; margin: 0 0 10px; font-weight: 500; }
+  .row { display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px solid #24272A; }
+  .row:last-child { border-bottom: none; }
+  .row .n { color: #7CC9BB; font-variant-numeric: tabular-nums; }
+  .empty { color: #75787A; font-size: 13px; text-align: center; padding: 30px 0; }
+  .error-box { background: #2A2220; border: 1px solid #5A3A2A; border-radius: 8px; padding: 14px 16px; font-size: 13px; color: #D9A97A; line-height: 1.6; }
+  .refresh-link { font-size: 11.5px; color: #75787A; cursor: pointer; text-decoration: underline; }
+</style>
+
+<div class="app" id="app">
+  <div class="empty">Caricamento...</div>
+</div>
+
+<script>
+(function () {
+  var SUPABASE_URL = "https://wjhgjhwxxoykzppwudvb.supabase.co";
+  var ANON_KEY = "sb_publishable_YSIRV9WGjdOExHUs0OnBMg_OEiRDs-4";
+  var activeRange = '24h';
+
+  var RANGES = {
+    '24h': { label: '24 ore', ms: 24 * 60 * 60 * 1000 },
+    '7d':  { label: '7 giorni', ms: 7 * 24 * 60 * 60 * 1000 },
+    '30d': { label: '30 giorni', ms: 30 * 24 * 60 * 60 * 1000 }
+  };
+
+  function escapeHtml(str) {
+    var d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  function renderShell() {
+    var app = document.getElementById('app');
+    var rangeButtons = Object.keys(RANGES).map(function (key) {
+      return '<button class="range-btn' + (key === activeRange ? ' active' : '') + '" data-range="' + key + '">' + RANGES[key].label + '</button>';
+    }).join('');
+
+    app.innerHTML =
+      '<div class="top-row">' +
+        '<div><h2>Soc & Soc</h2><p class="sub" style="margin:0;"><span class="refresh-link" id="refreshLink">aggiorna</span></p></div>' +
+        '<div class="range-row">' + rangeButtons + '</div>' +
+      '</div>' +
+      '<div id="statsArea"><div class="empty">Caricamento statistiche...</div></div>';
+
+    document.getElementById('refreshLink').onclick = fetchStats;
+    app.querySelectorAll('.range-btn').forEach(function (b) {
+      b.onclick = function () { activeRange = b.getAttribute('data-range'); renderShell(); };
+    });
+
+    fetchStats();
+  }
+
+  async function fetchStats() {
+    var statsArea = document.getElementById('statsArea');
+    var since = new Date(Date.now() - RANGES[activeRange].ms).toISOString();
+
+    try {
+      var res = await fetch(
+        SUPABASE_URL + '/rest/v1/analytics_events?created_at=gte.' + encodeURIComponent(since) + '&select=path,event_type,referrer,created_at&order=created_at.desc&limit=2000',
+        { headers: { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY } }
+      );
+
+      if (!res.ok) {
+        statsArea.innerHTML = '<div class="error-box">Non riesco a leggere i dati (errore ' + res.status + '). Controlla di aver eseguito analytics-setup.sql su Supabase.</div>';
+        return;
+      }
+
+      var events = await res.json();
+      renderStats(events);
+    } catch (e) {
+      statsArea.innerHTML = '<div class="error-box">Errore di connessione al database. Riprova tra poco.</div>';
+    }
+  }
+
+  function renderStats(events) {
+    var statsArea = document.getElementById('statsArea');
+
+    var pageviews = events.filter(function (e) { return e.event_type === 'pageview'; });
+    var waClicks = events.filter(function (e) { return e.event_type === 'click_whatsapp'; });
+    var telClicks = events.filter(function (e) { return e.event_type === 'click_telefono'; });
+
+    var pathCounts = {};
+    pageviews.forEach(function (e) { pathCounts[e.path] = (pathCounts[e.path] || 0) + 1; });
+    var topPaths = Object.keys(pathCounts)
+      .map(function (p) { return { path: p, count: pathCounts[p] }; })
+      .sort(function (a, b) { return b.count - a.count; })
+      .slice(0, 6);
+
+    var refCounts = {};
+    events.forEach(function (e) {
+      var ref = 'Diretto';
+      if (e.referrer) {
+        try { ref = new URL(e.referrer).hostname; } catch (err) { ref = e.referrer; }
+      }
+      refCounts[ref] = (refCounts[ref] || 0) + 1;
+    });
+    var topRefs = Object.keys(refCounts)
+      .map(function (r) { return { ref: r, count: refCounts[r] }; })
+      .sort(function (a, b) { return b.count - a.count; })
+      .slice(0, 6);
+
+    var pagesHtml = topPaths.length
+      ? topPaths.map(function (p) { return '<div class="row"><span>' + escapeHtml(p.path) + '</span><span class="n">' + p.count + '</span></div>'; }).join('')
+      : '<div class="empty" style="padding:10px 0;">Nessun dato in questo periodo.</div>';
+
+    var refsHtml = topRefs.length
+      ? topRefs.map(function (r) { return '<div class="row"><span>' + escapeHtml(r.ref) + '</span><span class="n">' + r.count + '</span></div>'; }).join('')
+      : '<div class="empty" style="padding:10px 0;">Nessun dato in questo periodo.</div>';
+
+    statsArea.innerHTML =
+      '<div class="stat-grid">' +
+        '<div class="stat-card"><div class="label">Visite pagina</div><div class="val">' + pageviews.length + '</div></div>' +
+        '<div class="stat-card"><div class="label">Click WhatsApp</div><div class="val">' + waClicks.length + '</div></div>' +
+        '<div class="stat-card"><div class="label">Click telefono</div><div class="val">' + telClicks.length + '</div></div>' +
+      '</div>' +
+      '<div class="panels">' +
+        '<div class="panel"><h3>Pagine più visitate</h3>' + pagesHtml + '</div>' +
+        '<div class="panel"><h3>Provenienza</h3>' + refsHtml + '</div>' +
+      '</div>';
+  }
+
+  renderShell();
+})();
+</script>
